@@ -61,7 +61,6 @@ public class Searcher {
 
 
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
         DirectoryReader ireader = DirectoryReader.open(directory);
         IndexSearcher isearcher = new IndexSearcher(ireader);
 
@@ -90,6 +89,8 @@ public class Searcher {
 
         String[] content = new String[]{ "title","bib", "author", "words"};
         QueryParser parser = new MultiFieldQueryParser(content, analyzer, boost);
+        parser.setAllowLeadingWildcard(true);
+
 
         //QueryParser parser = new QueryParser("content", analyzer);
 
@@ -97,7 +98,6 @@ public class Searcher {
         for(Model val: docs ){
             j++;
 
-            parser.setAllowLeadingWildcard(true);
             String currentQuery = val.words;
 
             Query query = parser.parse(currentQuery);
@@ -126,6 +126,9 @@ public class Searcher {
 //            }
 //
 //        }
+
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
+
 
 
         bufferedWriter.write(result.trim());

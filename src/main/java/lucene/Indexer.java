@@ -33,7 +33,7 @@ public class Indexer {
     public static String datasetPath = "";
     public static String queryPath = "";
     public static String resultPath = "";
-    public static int MAX_RESULTS = 30;
+    public static int MAX_RESULTS = 500;
     public static String similarityFlag = "";
     public static String analyzerFlag = "";
 
@@ -48,7 +48,7 @@ public class Indexer {
                     "Default Values will be considered otherwise");
         }
 
-
+        //Get all the variable values from the resources/config.properties file
         Setup properties = new Setup();
 
         datasetPath  = properties.getConfig("datasetPath");
@@ -56,6 +56,7 @@ public class Indexer {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(datasetPath));
         String line = bufferedReader.readLine();
 
+        // For loop to get the command line optional arguments to change the configuration of the Search Engine
         int i =0;
         for(String arg : Args){
             if(arg.contains( "-queryPath")){
@@ -92,6 +93,8 @@ public class Indexer {
 //        ft.setStoreTermVectorPayloads(true);
 
         ArrayList<Model>  docs  = new ArrayList<Model>();
+
+        //List of analyser that can be chosen from the command line
 
         Analyzer analyzer = new EnglishAnalyzer();
         if(analyzerFlag.equals("2")){analyzer = new StandardAnalyzer();}

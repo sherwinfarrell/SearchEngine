@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class Setup {
+
+    // This class gets all the config values like queryPath, INDEX_DIRECTORY,datasetPath, resultPath, MAX_RESULTS
     InputStream inputStream;
 
 
