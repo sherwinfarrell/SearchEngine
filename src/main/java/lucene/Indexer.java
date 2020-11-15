@@ -41,6 +41,12 @@ public class Indexer {
 
     public static void main(String Args[]) throws IOException, ParseException {
         long start = System.currentTimeMillis();
+        if(Args.length ==0 ){
+            System.out.println("The following arguments can be used\n" +
+                    "-INDEX_DIRECTORY Index/ -queryPath Corpus/cran.qry -datasetPath Corpus/cran.all.1400 -MAX_RESULTS 30  -resultPath Corpus/results.txt -Similarity 2 -Analyzer 2\n" +
+                    "Similarites range from 1 to 3 and Analzers from 1 to 5. Refer to the readme for the options\n" +
+                    "Default Values will be considered otherwise");
+        }
 
 
         Setup properties = new Setup();

@@ -1,0 +1,22 @@
+# Lucene Assignment 1 
+How to run the program ?  
+java -jar target/Assignment1-1.0-SNAPSHOT.jar
+
+### Arguments : 
+-INDEX_DIRECTORY Index/ -queryPath Corpus/cran.qry -datasetPath Corpus/cran.all.1400 -MAX_RESULTS 30  -resultPath Corpus/results.txt -Similarity 2 -Analyzer 2
+
+INDEX_DIRECTORY - Directory of where the index will be located. 
+queryPath - Path to the query. For eg: Corpus/cran.qry
+datasetPath - Path to the Cranfield dataset. Eg. Corpus/cran.all.1400
+MAX_RESULTS - The number of results in that the IR system outputs for each query
+resultPath - Where the results.txt file will be created
+Similarity - The similarity that should be use.  
+                Similarities avaialble are : 1) BM25Similarity
+                2) ClassicSimilarity
+                3) BooleanSimilarity
+Analyzer - The Analyzer that can be used : 
+            1) EnglishAnalyzer
+            2)StandardAnalyzer
+            3)CustomAnalyzer
+            4)SimpleAnalyzer
+            5)WhitespaceAnalyzer
