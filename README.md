@@ -20,3 +20,9 @@ Analyzer - The Analyzer that can be used :
             3)CustomAnalyzer
             4)SimpleAnalyzer
             5)WhitespaceAnalyzer
+            
+# Running trec Eval : 
+
+Command can be run from the project root directory :  
+./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval
+ Corpus/results.txt 
