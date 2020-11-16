@@ -7,25 +7,29 @@ java -jar target/Assignment1-1.0-SNAPSHOT.jar
 
 
 ### The Arguments are : 
-**INDEX_DIRECTORY** - Directory of where the index will be located.   
-**queryPath** - Path to the query. For eg: Corpus/cran.qry  
-**datasetPath** - Path to the Cranfield dataset. Eg. Corpus/cran.all.1400  
-**MAX_RESULTS** - The number of results that the IR system outputs for each query  
-**resultPath** - Where the results.txt file will be created.  
+```
+INDEX_DIRECTORY - Directory of where the index will be located.   
+queryPath - Path to the query. For eg: Corpus/cran.qry  
+datasetPath - Path to the Cranfield dataset. Eg. Corpus/cran.all.1400  
+MAX_RESULTS - The number of results that the IR system outputs for each query  
+resultPath - Where the results.txt file will be created. 
+``` 
 
 **Similarity - The similarities that can be used**  
-                Similarities available are :  
-                Option 1) BM25Similarity  
-                Option 2) ClassicSimilarity  
-                Option 3) BooleanSimilarity  
+
+        Similarities available are :  
+        Option 1) BM25Similarity  
+        Option 2) ClassicSimilarity  
+        Option 3) BooleanSimilarity  
                 
-**Analyzer - The Analyzer that can be used :**   
-            1) EnglishAnalyzer  
-            2)StandardAnalyzer  
-            3)CustomAnalyzer  
-            4)SimpleAnalyzer  
-            5)WhitespaceAnalyzer  
-            
+**Analyzer - The Analyzer that can be used :**  
+```
+   1) EnglishAnalyzer  
+   2)StandardAnalyzer  
+   3)CustomAnalyzer  
+   4)SimpleAnalyzer  
+   5)WhitespaceAnalyzer  
+```           
 # Running trec Eval : 
 
 The trec eval function is located here /home/ubuntu/LuceneAssignment/Corpus/trec_eval/trec_eval-9.0.7

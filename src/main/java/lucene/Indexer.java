@@ -18,9 +18,7 @@ import org.apache.lucene.search.similarities.ClassicSimilarity;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -43,18 +41,16 @@ public class Indexer {
         long start = System.currentTimeMillis();
         if(Args.length ==0 ){
             System.out.println("The following arguments can be used\n" +
-                    "-INDEX_DIRECTORY Index/ -queryPath Corpus/cran.qry -datasetPath Corpus/cran.all.1400 -MAX_RESULTS 30  -resultPath Corpus/results.txt -Similarity 2 -Analyzer 2\n" +
-                    "Similarites range from 1 to 3 and Analzers from 1 to 5. Refer to the readme for the options\n" +
-                    "Default Values will be considered otherwise");
+                    "       -INDEX_DIRECTORY Index/\n       -queryPath Corpus/cran.qry\n       -datasetPath Corpus/cran.all.1400 -MAX_RESULTS 30\n       -resultPath Corpus/results.txt -Similarity 2\n       -Analyzer 2\n" +
+                    "Similarites range from 1 to 3 and Analzers from 1 to 5. Refer to the readme for the options.\n" +
+                    "Default Values will be considered from the config.properties file otherwise :)\n\n");
         }
 
         //Get all the variable values from the resources/config.properties file
         Setup properties = new Setup();
-
         datasetPath  = properties.getConfig("datasetPath");
         INDEX_DIRECTORY = properties.getConfig("INDEX_DIRECTORY");
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(datasetPath));
-        String line = bufferedReader.readLine();
+
 
         // For loop to get the command line optional arguments to change the configuration of the Search Engine
         int i =0;
@@ -83,16 +79,9 @@ public class Indexer {
             i++;
         }
 
-        //Document doc = null ;
 
-//        FieldType ft = new FieldType(TextField.TYPE_STORED);
-//        ft.setTokenized(true); //done as default
-//        ft.setStoreTermVectors(true);
-//        ft.setStoreTermVectorPositions(true);
-//        ft.setStoreTermVectorOffsets(true);
-//        ft.setStoreTermVectorPayloads(true);
 
-        ArrayList<Model>  docs  = new ArrayList<Model>();
+        ArrayList<Model>  docs ;
 
         //List of analyser that can be chosen from the command line
 
@@ -111,14 +100,16 @@ public class Indexer {
 
 
         config.setSimilarity(new BM25Similarity(2f, 0.88f));
-        if (similarityFlag.equals( "2")) {        config.setSimilarity(new ClassicSimilarity()); }
-        if (similarityFlag.equals( "3")) {        config.setSimilarity(new BooleanSimilarity()); }
+//        if (similarityFlag.equals( "2")) {        config.setSimilarity(new ClassicSimilarity()); }
+//        if (similarityFlag.equals( "3")) {        config.setSimilarity(new BooleanSimilarity()); }
+
+        config.setRAMBufferSizeMB(1024);
 
 
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         IndexWriter iwriter = new IndexWriter(directory, config);
 
-        docs = Extraction.extract(datasetPath);
+        docs = Extraction.extractDataset(datasetPath);
 
         System.out.println("Successfully Parsed all the documents ..... ");
 
@@ -142,6 +133,18 @@ public class Indexer {
 
         }
 
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Corpus/IndexedContent"));
+
+        for (Model val : docs){
+            bufferedWriter.write("id ---> " + val.id+ "\n");
+            bufferedWriter.write("title\n" + val.title+ "\n");
+            bufferedWriter.write("author\n" + val.author+ "\n");
+            bufferedWriter.write("bib\n" + val.bib+ "\n");
+            bufferedWriter.write("words\n" + val.words+ "\n\n\n");
+
+        }
+        bufferedWriter.close();
+
         System.out.println("Successfully Indexed all the documents ..... ");
 
 
@@ -149,8 +152,7 @@ public class Indexer {
         iwriter.close();
         directory.close();
 
-        Searcher searchQuery = new Searcher();
-        searchQuery.search();
+        Searcher.search();
 
         long end = System.currentTimeMillis();
 
@@ -160,3 +162,16 @@ public class Indexer {
 
     }
 }
+
+
+
+// To tokenize the dataset, doesn't improve the query as tested
+//Document doc = null ;
+
+
+//        FieldType ft = new FieldType(TextField.TYPE_STORED);
+//        ft.setTokenized(true); //done as default
+//        ft.setStoreTermVectors(true);
+//        ft.setStoreTermVectorPositions(true);
+//        ft.setStoreTermVectorOffsets(true);
+//        ft.setStoreTermVectorPayloads(true);
