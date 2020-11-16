@@ -54,13 +54,7 @@ public class Searcher {
 
 
 
-        // Creating an array list of string queries or Model object depending on the preference.
-        // This is then parsed to the either extractQuery or extractDataset to get the queries
-//        ArrayList<Model> docs  = new ArrayList<Model>();
-//        docs = Extraction.extractDataset(queryPath);
-        ArrayList<String> queries = new ArrayList<>();
-        queries = Extraction.extractQuery(queryPath);
-        System.out.println("Parsed all the queries ..... ");
+
 
 
         //Open the directory and create an index reader
@@ -102,10 +96,46 @@ public class Searcher {
         QueryParser parser = new MultiFieldQueryParser(content, analyzer, boost);
         parser.setAllowLeadingWildcard(true);
 
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
 
-        //QueryParser parser = new QueryParser("content", analyzer);
+
+        Extraction.scoreQuery(queryPath, parser, isearcher, bufferedWriter, MAX_RESULTS);
+
+
 
         System.out.println("Using Max results " + MAX_RESULTS);
+
+
+
+        // Creating a buffered writer to store all the results
+        // This will be used by trec eval to evaluate the results from the command line
+       // BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
+        //bufferedWriter.write(result.trim());
+        bufferedWriter.close();
+        directory.close();
+        ireader.close();
+
+        System.out.println("Results file has been generated..... ");
+
+
+
+    }
+}
+
+
+
+    // Creating an array list of string queries or Model object depending on the preference.
+    // This is then parsed to the either extractQuery or extractDataset to get the queries
+//        ArrayList<Model> docs  = new ArrayList<Model>();
+//        docs = Extraction.extractDataset(queryPath);
+//    ArrayList<String> queries = new ArrayList<>();
+//        queries = Extraction.extractQuery(queryPath);
+//                System.out.println("Parsed all the queries ..... ");
+
+
+//QueryParser parser = new QueryParser("content", analyzer);
+
+
 //        for(Model val: docs ){
 //            j++;
 //
@@ -123,37 +153,18 @@ public class Searcher {
 //        }
 
 
-        // All the queries extracted using the parseQuery method in the Extraction class is looped over
-        // Each individual query is then taken and parsed using Lucenes inbuilt parser object after which a query object is created
-        // This query object is then using to search the index and the scores are then collected and concatenated with the result string
-        for(String qry: queries ){
-            j++;
-
-            parser.setAllowLeadingWildcard(true);
-
-            Query query = parser.parse(qry);
-            ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
-            // Print the results
-            for (int i = 0; i < hits.length; i++)
-            {
-                Document hitDoc = isearcher.doc(hits[i].doc);
-                result +=  "\n" + j + " 0 " + hitDoc.get("id") + " " + (i+1) + " " + hits[i].score + " Standard";
-            }
-
-        }
-
-
-        // Creating a buffered writer to store all the results
-        // This will be used by trec eval to evaluate the results from the command line
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
-        bufferedWriter.write(result.trim());
-        bufferedWriter.close();
-        directory.close();
-        ireader.close();
-
-        System.out.println("Results file has been generated..... ");
-
-
-
-    }
-}
+// All the queries extracted using the parseQuery method in the Extraction class is looped over
+// Each individual query is then taken and parsed using Lucenes inbuilt parser object after which a query object is created
+// This query object is then using to search the index and the scores are then collected and concatenated with the result string
+//        for(String qry: queries ){
+//            j++;
+//            Query query = parser.parse(qry);
+//            ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
+//            // Print the results
+//            for (int i = 0; i < hits.length; i++)
+//            {
+//                Document hitDoc = isearcher.doc(hits[i].doc);
+//                result +=  "\n" + j + " 0 " + hitDoc.get("id") + " " + (i+1) + " " + hits[i].score + " Standard";
+//            }
+//
+//        }

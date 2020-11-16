@@ -31,7 +31,7 @@ public class Indexer {
     public static String datasetPath = "";
     public static String queryPath = "";
     public static String resultPath = "";
-    public static int MAX_RESULTS = 500;
+    public static int MAX_RESULTS = 30;
     public static String similarityFlag = "";
     public static String analyzerFlag = "";
 
@@ -81,7 +81,6 @@ public class Indexer {
 
 
 
-        ArrayList<Model>  docs ;
 
         //List of analyser that can be chosen from the command line
 
@@ -100,8 +99,8 @@ public class Indexer {
 
 
         config.setSimilarity(new BM25Similarity(2f, 0.88f));
-//        if (similarityFlag.equals( "2")) {        config.setSimilarity(new ClassicSimilarity()); }
-//        if (similarityFlag.equals( "3")) {        config.setSimilarity(new BooleanSimilarity()); }
+        if (similarityFlag.equals( "2")) {        config.setSimilarity(new ClassicSimilarity()); }
+        if (similarityFlag.equals( "3")) {        config.setSimilarity(new BooleanSimilarity()); }
 
         config.setRAMBufferSizeMB(1024);
 
@@ -109,49 +108,17 @@ public class Indexer {
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
         IndexWriter iwriter = new IndexWriter(directory, config);
 
-        docs = Extraction.extractDataset(datasetPath);
+        System.out.println("Parsing and indexing the document Simultaenously, Because of speed improvement ..... ");
 
-        System.out.println("Successfully Parsed all the documents ..... ");
-
-        for(Model val: docs ){
-            Document doc = new Document();
-            doc.add(new StringField("id", val.id, Field.Store.YES));
-
-            doc.add(new TextField("title", val.title, Field.Store.YES));
-            doc.add(new TextField("bib", val.bib, Field.Store.YES));
-            doc.add(new TextField("author", val.author, Field.Store.YES));
-            doc.add(new TextField("words", val.words, Field.Store.YES));
-
-
-//            doc.add(new Field("title", val.title, ft));
-//            doc.add(new Field("bib", val.bib, ft));
-//            doc.add(new Field("author", val.author, ft));
-//            doc.add(new Field("words", val.words, ft));
-
-            iwriter.addDocument(doc);
-
-
-        }
-
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Corpus/IndexedContent"));
-
-        for (Model val : docs){
-            bufferedWriter.write("id ---> " + val.id+ "\n");
-            bufferedWriter.write("title\n" + val.title+ "\n");
-            bufferedWriter.write("author\n" + val.author+ "\n");
-            bufferedWriter.write("bib\n" + val.bib+ "\n");
-            bufferedWriter.write("words\n" + val.words+ "\n\n\n");
-
-        }
-        bufferedWriter.close();
-
-        System.out.println("Successfully Indexed all the documents ..... ");
+        Extraction.indexDataset(datasetPath,iwriter);
+        System.out.println("Finished Parsing and indexing the document..... ");
 
 
 
         iwriter.close();
         directory.close();
 
+        //Searching for the queries in the indexed Dataset
         Searcher.search();
 
         long end = System.currentTimeMillis();
@@ -175,3 +142,43 @@ public class Indexer {
 //        ft.setStoreTermVectorPositions(true);
 //        ft.setStoreTermVectorOffsets(true);
 //        ft.setStoreTermVectorPayloads(true);
+
+//    ArrayList<Model>  docs ;
+
+
+//        docs = Extraction.extractDataset(datasetPath);
+
+
+
+//
+//        for(Model val: docs ){
+//            Document doc = new Document();
+//            doc.add(new StringField("id", val.id, Field.Store.YES));
+//
+//            doc.add(new TextField("title", val.title, Field.Store.YES));
+//            doc.add(new TextField("bib", val.bib, Field.Store.YES));
+//            doc.add(new TextField("author", val.author, Field.Store.YES));
+//            doc.add(new TextField("words", val.words, Field.Store.YES));
+//
+//
+////            doc.add(new Field("title", val.title, ft));
+////            doc.add(new Field("bib", val.bib, ft));
+////            doc.add(new Field("author", val.author, ft));
+////            doc.add(new Field("words", val.words, ft));
+//
+//            iwriter.addDocument(doc);
+//
+//
+//        }
+//
+//        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Corpus/IndexedContent"));
+//
+//        for (Model val : docs){
+//            bufferedWriter.write("id ---> " + val.id+ "\n");
+//            bufferedWriter.write("title\n" + val.title+ "\n");
+//            bufferedWriter.write("author\n" + val.author+ "\n");
+//            bufferedWriter.write("bib\n" + val.bib+ "\n");
+//            bufferedWriter.write("words\n" + val.words+ "\n\n\n");
+//
+//        }
+//        bufferedWriter.close();

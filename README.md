@@ -35,5 +35,4 @@ resultPath - Where the results.txt file will be created.
 The trec eval function is located here /home/ubuntu/LuceneAssignment/Corpus/trec_eval/trec_eval-9.0.7
 
 Command can be run from the project root directory :  
-./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval
- Corpus/results.txt 
+./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval Corpus/results.txt 
