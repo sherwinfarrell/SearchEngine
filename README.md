@@ -35,4 +35,20 @@ resultPath - Where the results.txt file will be created.
 The trec eval function is located here /home/ubuntu/LuceneAssignment/Corpus/trec_eval/trec_eval-9.0.7
 
 Command can be run from the project root directory :  
-./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval Corpus/results.txt 
+./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval Corpus/results.txt
+
+
+## Refrences 
+
+Custom Analyzer : Lucen In Action Book by Erik Hatcher
+
+
+MultiField Parser:  
+Lucene in Action 
+https://lucene.apache.org/core/8.6.3/queryparser/org/apache/lucene/queryparser/classic/MultiFieldQueryParser.html
+
+Boosting scores for a multifield parser 
+https://lucene.apache.org/core/8.6.3/queryparser/org/apache/lucene/queryparser/classic/MultiFieldQueryParser.html
+https://stackoverflow.com/questions/18260408/lucene-boosting-scoring-with-multiple-columns
+
+ 

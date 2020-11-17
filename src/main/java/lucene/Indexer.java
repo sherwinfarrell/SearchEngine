@@ -5,10 +5,6 @@ import org.apache.lucene.analysis.core.SimpleAnalyzer;
 import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.StringField;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryparser.classic.ParseException;
@@ -20,9 +16,8 @@ import org.apache.lucene.store.FSDirectory;
 
 import java.io.*;
 import java.nio.file.Paths;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.ArrayList;
+
+
 
 
 public class Indexer {
@@ -38,7 +33,10 @@ public class Indexer {
 
 
     public static void main(String Args[]) throws IOException, ParseException {
-        long start = System.currentTimeMillis();
+
+            long programStart = System.currentTimeMillis();
+
+
         if(Args.length ==0 ){
             System.out.println("The following arguments can be used\n" +
                     "       -INDEX_DIRECTORY Index/\n       -queryPath Corpus/cran.qry\n       -datasetPath Corpus/cran.all.1400 -MAX_RESULTS 30\n       -resultPath Corpus/results.txt -Similarity 2\n       -Analyzer 2\n" +
@@ -102,7 +100,8 @@ public class Indexer {
         if (similarityFlag.equals( "2")) {        config.setSimilarity(new ClassicSimilarity()); }
         if (similarityFlag.equals( "3")) {        config.setSimilarity(new BooleanSimilarity()); }
 
-        config.setRAMBufferSizeMB(1024);
+
+
 
 
         config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
@@ -121,14 +120,14 @@ public class Indexer {
         //Searching for the queries in the indexed Dataset
         Searcher.search();
 
-        long end = System.currentTimeMillis();
 
-        NumberFormat formatter = new DecimalFormat("#0.00000");
-        System.out.print("Execution time is " + formatter.format((end - start) / 1000d) + " seconds");
+        long programEnd = System.currentTimeMillis();
+        System.out.println("The application took : " + (programEnd - programStart)/1000f + "s to Execute");
 
 
     }
 }
+
 
 
 

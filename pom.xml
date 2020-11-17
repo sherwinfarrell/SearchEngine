@@ -26,11 +26,6 @@
             <artifactId>lucene-analyzers-common</artifactId>
             <version>8.6.3</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-classification</artifactId>
-            <version>8.6.3</version>
-        </dependency>
 
         <dependency>
             <groupId>junit</groupId>

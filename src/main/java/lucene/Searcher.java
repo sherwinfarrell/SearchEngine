@@ -48,9 +48,13 @@ public class Searcher {
         if(!Indexer.queryPath.equals("")){queryPath = Indexer.queryPath;}
         if(!Indexer.resultPath.equals("")){resultFile = Indexer.resultPath;}
         MAX_RESULTS = Indexer.MAX_RESULTS;
-
         String similarityFlag = Indexer.similarityFlag;
         String analyzerFlag = Indexer.analyzerFlag;
+
+        System.out.println("Using Max results " + MAX_RESULTS);
+
+
+
 
 
 
@@ -103,14 +107,11 @@ public class Searcher {
 
 
 
-        System.out.println("Using Max results " + MAX_RESULTS);
 
 
 
         // Creating a buffered writer to store all the results
         // This will be used by trec eval to evaluate the results from the command line
-       // BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
-        //bufferedWriter.write(result.trim());
         bufferedWriter.close();
         directory.close();
         ireader.close();
