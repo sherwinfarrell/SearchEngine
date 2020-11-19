@@ -1,8 +1,12 @@
 # Lucene Assignment 1 
-The program can be run using the following command in the Project root :
-mvn clean install 
-mvn package  
-java -jar target/Assignment1-1.0-SNAPSHOT.jar
+The program can be run using the following command in the **Project root** :  
+cd LuceneAssignment
+mvn clean install   
+mvn package   
+java -jar target/Assignment1-1.0-SNAPSHOT.jar  
+To run trec_eval:  
+./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval Corpus/results.txt
+
 
 ### Arguments : 
 -INDEX_DIRECTORY Index/ -queryPath Corpus/cran.qry -datasetPath Corpus/cran.all.1400 -MAX_RESULTS 30  -resultPath Corpus/results.txt -Similarity 2 -Analyzer 2  
@@ -36,7 +40,7 @@ resultPath - Where the results.txt file will be created.
 
 The trec eval function is located here /home/ubuntu/LuceneAssignment/Corpus/trec_eval/trec_eval-9.0.7
 
-Command can be run from the project root directory :  
+Command can be run from the **project root** directory :  
 ./Corpus/trec_eval/trec_eval-9.0.7/trec_eval Corpus/QRelsCorrectedforTRECeval Corpus/results.txt
 
 
