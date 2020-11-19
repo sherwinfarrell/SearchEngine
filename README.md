@@ -1,6 +1,6 @@
 # Lucene Assignment 1 
 The program can be run using the following command in the **Project root** :  
-cd LuceneAssignment
+cd LuceneAssignment  
 mvn clean install   
 mvn package   
 java -jar target/Assignment1-1.0-SNAPSHOT.jar  
