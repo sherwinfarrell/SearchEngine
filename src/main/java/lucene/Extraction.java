@@ -14,6 +14,7 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -29,7 +30,13 @@ public class Extraction {
     public static void indexDataset(String fileName, IndexWriter iw) throws IOException {
 
         //Creating a buffered reader to read the dataset
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        BufferedReader bufferedReader =null;
+        try {
+         bufferedReader = new BufferedReader(new FileReader(fileName));}
+        catch (Exception e){
+            System.out.println("The path to the dataset maybe wrong, please check again.");
+            System.exit(0);
+        }
         String line = bufferedReader.readLine();
 
         // While loop to iterate through the cran.all.1400 dataset, create instances of the Model class and then add it to the docs array list.
@@ -107,7 +114,13 @@ public class Extraction {
 
     public static  void scoreQuery(String fileName, QueryParser parser, IndexSearcher is, BufferedWriter bw, int mr) throws IOException, ParseException {
         // A buffered reader has been used to read the dataset again
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        BufferedReader bufferedReader = null;
+        try {
+         bufferedReader = new BufferedReader(new FileReader(fileName));}
+        catch (Exception e){
+        System.out.println("The path to the Query File  maybe wrong, please check again.");
+        System.exit(0);
+    }
         String line = bufferedReader.readLine();
         int j = 0;
 

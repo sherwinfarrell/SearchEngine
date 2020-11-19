@@ -99,8 +99,13 @@ public class Searcher {
         String[] content = new String[]{ "title","bib", "author", "words"};
         QueryParser parser = new MultiFieldQueryParser(content, analyzer, boost);
         parser.setAllowLeadingWildcard(true);
-
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
+        BufferedWriter bufferedWriter = null;
+        try {
+         bufferedWriter = new BufferedWriter(new FileWriter(resultFile));}
+        catch (Exception e){
+        System.out.println("The path to the Results File maybe wrong, please check again.");
+        System.exit(0);
+    }
 
         // Searching and creating the resutls file through this method
         Extraction.scoreQuery(queryPath, parser, isearcher, bufferedWriter, MAX_RESULTS);

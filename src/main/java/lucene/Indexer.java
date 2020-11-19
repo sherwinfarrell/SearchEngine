@@ -55,25 +55,59 @@ public class Indexer {
         int i =0;
         for(String arg : Args){
             if(arg.contains( "-queryPath")){
-                queryPath = Args[i+1];
+                try {
+                    queryPath = Args[i + 1];
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                     System.out.println("The path to the query file has not being given, For example -queryPath Corpus/cran.qry");
+                     System.exit(0);
+                }
             }
             if(arg.contains("-datasetPath")){
+                try {
                 datasetPath = Args[i+1];
             }
+                catch (ArrayIndexOutOfBoundsException e){
+                System.out.println("The path to the dataset file has not being given, For example -dataset Corpus/cran.all.1400");
+                System.exit(0);
+            }
+            }
             if(arg.contains("-INDEX_DIRECTORY")){
+                try {
                 INDEX_DIRECTORY = Args[i+1];
-            }
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("The path to the Index Directory has not being given, For example -INDEX_DIRECTORY Index/");
+                    System.exit(0);
+            }}
             if(arg.contains("-resultPath")){
-                resultPath = Args[i+1];
-            }
+                try { resultPath = Args[i+1];
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("The path to the results file has not being given, For example -resultPath Corpus/results.txt");
+                    System.exit(0);
+            }}
             if(arg.contains("-MAX_RESULTS")){
-                MAX_RESULTS = Integer.parseInt(Args[i+1]);
-            }
+                try { MAX_RESULTS = Integer.parseInt(Args[i+1]);
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("The value for MAX_RESULTS has not being given, For example -MAX_RESULTS 100");
+                    System.exit(0);
+            }}
             if(arg.contains("-Similarity")){
-                similarityFlag = Args[i+1];
-            }
-            if(arg.contains("-Analyzer")){
-                analyzerFlag = Args[i+1];
+                try {similarityFlag = Args[i+1];
+                }
+                catch (ArrayIndexOutOfBoundsException e){
+                    System.out.println("The option for the Similarity has not being given, For example -Similarity 3");
+                    System.exit(0);
+            }}
+            if(arg.contains("-Analyzer")) {
+                try {
+                    analyzerFlag = Args[i + 1];
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    System.out.println("The option for the analyzer has not being given, For example -Analyzer 2");
+                    System.exit(0);
+                }
             }
             i++;
         }
@@ -92,7 +126,13 @@ public class Indexer {
 
 
         // Getting the path to the directory and then creating an index writer with the given analyzer
-        Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
+                Directory directory = null;
+        try {
+         directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));}
+        catch (Exception e){
+            System.out.println("The Path to the Index directory maybe wrong");
+            System.exit(0);
+                }
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
 
