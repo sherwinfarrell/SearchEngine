@@ -51,4 +51,10 @@ Boosting scores for a multifield parser
 https://lucene.apache.org/core/8.6.3/queryparser/org/apache/lucene/queryparser/classic/MultiFieldQueryParser.html
 https://stackoverflow.com/questions/18260408/lucene-boosting-scoring-with-multiple-columns
 
- 
+BM25 vs TFIDF (Definitions on k1 and b used in Lucene's BM25):  
+https://opensourceconnections.com/blog/2015/10/16/bm25-the-next-generation-of-lucene-relevation/
+
+Trec_Eval Scores:
+https://trec.nist.gov/pubs/trec15/appendices/CE.MEASURES06.pdf  
+https://vtechworks.lib.vt.edu/bitstream/handle/10919/52528/MidtermModuleTeam5-TRECevalFinal.pdf;jsessionid=8CF15EC2503F34A0FBBF0CF45FBA750E?sequence=1  
+http://www.rafaelglater.com/en/post/learn-how-to-use-trec_eval-to-evaluate-your-information-retrieval-system

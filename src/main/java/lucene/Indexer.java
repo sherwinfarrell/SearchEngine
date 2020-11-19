@@ -26,7 +26,7 @@ public class Indexer {
     public static String datasetPath = "";
     public static String queryPath = "";
     public static String resultPath = "";
-    public static int MAX_RESULTS = 30;
+    public static int MAX_RESULTS = 100;
     public static String similarityFlag = "";
     public static String analyzerFlag = "";
 
@@ -34,6 +34,7 @@ public class Indexer {
 
     public static void main(String Args[]) throws IOException, ParseException {
 
+            // start time for program execution time
             long programStart = System.currentTimeMillis();
 
 
@@ -90,12 +91,12 @@ public class Indexer {
 
 
 
-
+        // Getting the path to the directory and then creating an index writer with the given analyzer
         Directory directory = FSDirectory.open(Paths.get(INDEX_DIRECTORY));
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
 
 
-
+        // Similarity is set here, using the option from th command line, default is the BM25 if no Similarity is given
         config.setSimilarity(new BM25Similarity(2f, 0.88f));
         if (similarityFlag.equals( "2")) {        config.setSimilarity(new ClassicSimilarity()); }
         if (similarityFlag.equals( "3")) {        config.setSimilarity(new BooleanSimilarity()); }
@@ -109,6 +110,7 @@ public class Indexer {
 
         System.out.println("Parsing and indexing the document Simultaenously, Because of speed improvement ..... ");
 
+        // Function that Extracts the dataset Simultaenously
         Extraction.indexDataset(datasetPath,iwriter);
         System.out.println("Finished Parsing and indexing the document..... ");
 
@@ -120,7 +122,7 @@ public class Indexer {
         //Searching for the queries in the indexed Dataset
         Searcher.search();
 
-
+        // Getting the time to calculate the execution time
         long programEnd = System.currentTimeMillis();
         System.out.println("The application took : " + (programEnd - programStart)/1000f + "s to Execute");
 

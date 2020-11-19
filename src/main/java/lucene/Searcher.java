@@ -102,7 +102,7 @@ public class Searcher {
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(resultFile));
 
-
+        // Searching and creating the resutls file through this method
         Extraction.scoreQuery(queryPath, parser, isearcher, bufferedWriter, MAX_RESULTS);
 
 
@@ -122,50 +122,3 @@ public class Searcher {
 
     }
 }
-
-
-
-    // Creating an array list of string queries or Model object depending on the preference.
-    // This is then parsed to the either extractQuery or extractDataset to get the queries
-//        ArrayList<Model> docs  = new ArrayList<Model>();
-//        docs = Extraction.extractDataset(queryPath);
-//    ArrayList<String> queries = new ArrayList<>();
-//        queries = Extraction.extractQuery(queryPath);
-//                System.out.println("Parsed all the queries ..... ");
-
-
-//QueryParser parser = new QueryParser("content", analyzer);
-
-
-//        for(Model val: docs ){
-//            j++;
-//
-//            String currentQuery = val.words;
-//
-//            Query query = parser.parse(currentQuery);
-//            ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
-//            // Print the results
-//            for (int i = 0; i < hits.length; i++)
-//            {
-//                Document hitDoc = isearcher.doc(hits[i].doc);
-//                result +=  "\n" + j + " 0 " + hitDoc.get("id") + " " + (i+1) + " " + hits[i].score + " Standard";
-//            }
-//
-//        }
-
-
-// All the queries extracted using the parseQuery method in the Extraction class is looped over
-// Each individual query is then taken and parsed using Lucenes inbuilt parser object after which a query object is created
-// This query object is then using to search the index and the scores are then collected and concatenated with the result string
-//        for(String qry: queries ){
-//            j++;
-//            Query query = parser.parse(qry);
-//            ScoreDoc[] hits = isearcher.search(query, MAX_RESULTS).scoreDocs;
-//            // Print the results
-//            for (int i = 0; i < hits.length; i++)
-//            {
-//                Document hitDoc = isearcher.doc(hits[i].doc);
-//                result +=  "\n" + j + " 0 " + hitDoc.get("id") + " " + (i+1) + " " + hits[i].score + " Standard";
-//            }
-//
-//        }

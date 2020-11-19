@@ -37,11 +37,14 @@ public class Extraction {
 
             if (line.startsWith(".I")) {
 
+                // Using a hash MAP to store the intermediate results for the text under each identifier
                 HashMap<String, String> content = new HashMap<String, String>();
                 content.put("id", line.substring(3));
 
 
                 line = bufferedReader.readLine();
+                // This is a flag that will store the value of the last identifier parsed  so that we can store the
+                // content against this value
                 String contentKey = "";
 
                 while (line != null && !line.startsWith(".I")) {
@@ -50,6 +53,8 @@ public class Extraction {
 //                        System.out.println(line);
                         contentKey = "title";
                         if (!content.containsKey("title")) {
+                            //Creating a key value in the content hash map which willbe used later in the next loop
+                            // to add the content against the key. This is done for all the indentifiers
                             content.put("title", "");
                         }
                     } else if (line.startsWith(".A")) {
@@ -74,18 +79,24 @@ public class Extraction {
                             content.put("words", "");
                         }
                     } else {
+                        // If we come across a line where there is no identifier, we just add to value for the
+                        // last identifier in the hash map
                         content.put(contentKey, content.get(contentKey) + (" " + line));
 
                     }
                     line = bufferedReader.readLine();
 
                 }
+                // After we come accross Identifier ".I" we stoer all the values in a document and index it
+                // This is because identifier .I shows that we are starting to extract the next document
                 Document doc = new Document();
                 doc.add(new StringField("id", content.get("id"), Field.Store.YES));
                 doc.add(new TextField("title", content.get("title"), Field.Store.YES));
                 doc.add(new TextField("author", content.get("author"), Field.Store.YES));
                 doc.add(new TextField("bib", content.get("bib"), Field.Store.YES));
                 doc.add(new TextField("words", content.get("words"), Field.Store.YES));
+
+                //we are indexing the document immediately as it gives a performance improvement.
                 iw.addDocument(doc);
 
             }
@@ -104,6 +115,10 @@ public class Extraction {
         ArrayList<String> queries = new ArrayList<String>();
 
         //While loop to extract individual queries and add it to the queries array
+        // This is similar to the index dataset method, but instead of going through all he identifiers, it just goes
+        // through .I and .W to make it efficient.
+        // Current query stores the text from the line after it encounters .W indentifier until it indentifies  a .I
+        //indentifier
         String currentQuery = "";
         while (line != null) {
             if(line.startsWith(".I ")) {

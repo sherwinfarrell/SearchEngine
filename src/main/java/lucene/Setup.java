@@ -7,6 +7,7 @@ import java.util.Properties;
 public class Setup {
 
     // This class gets all the config values like queryPath, INDEX_DIRECTORY,datasetPath, resultPath, MAX_RESULTS
+    // from the config.properties file under resources
     InputStream inputStream;
 
 
